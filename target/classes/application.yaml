@@ -1,0 +1,23 @@
+spring:
+  config:
+    import: optional:file:.env[.properties]
+  application:
+    name: tasklist
+  liquibase:
+    change-log: classpath:liquibase/db.changelog.yaml
+    enabled: true
+    default-schema: ${POSTGRES_SCHEMA}
+security:
+  jwt:
+    secret: ${JWT_SECRET}
+    access: 1
+    refresh: 30
+server:
+  port: 8081
+springdoc:
+  override-with-generic-response: false
+minio:
+  bucket: ${MINIO_BUCKET}
+  minioUrl: ${MINIO_URL}
+  accessKey: ${MINIO_ACCESS_KEY}
+  secretKey: ${MINIO_SECRET_KEY}
