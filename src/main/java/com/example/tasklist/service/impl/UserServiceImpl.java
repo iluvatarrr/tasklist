@@ -66,7 +66,7 @@ public class UserServiceImpl implements UserService {
             throw new IllegalStateException("Username is already in use");
         }
         if (!user.getPassword().equals(user.getPasswordConfirmation())) {
-            throw new IllegalStateException  ("Passwords do not match");
+            throw new IllegalStateException("Passwords do not match");
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         Set<Role> roles = Set.of(Role.ROLE_USER);

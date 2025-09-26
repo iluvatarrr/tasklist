@@ -2,7 +2,9 @@ package com.example.tasklist.domain.user;
 
 import com.example.tasklist.domain.task.Task;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 
 import java.io.Serializable;

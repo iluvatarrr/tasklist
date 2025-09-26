@@ -58,7 +58,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     @Transactional
-    @Cacheable(value = "TaskService::getById", key="#task.id")
+    @Cacheable(value = "TaskService::getById", key = "#task.id")
     public Task create(Task task, Long userId) {
         User user = userService.getById(userId);
         task.setStatus(Status.TODO);
@@ -78,7 +78,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     @Transactional
-    @CacheEvict(value = "TaskService::getById", key="#id")
+    @CacheEvict(value = "TaskService::getById", key = "#id")
     public void uploadImage(Long id, TaskImage image) {
         Task task = getById(id);
         String fileName = imageService.upload(image);

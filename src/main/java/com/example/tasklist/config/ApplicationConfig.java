@@ -23,7 +23,6 @@ import org.springframework.security.access.expression.method.MethodSecurityExpre
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
-import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -49,28 +48,27 @@ public class ApplicationConfig {
         return authenticationConfiguration.getAuthenticationManager();
     }
 
-
     @Bean
     public SecurityFilterChain securityFilterChain(final HttpSecurity http) throws Exception {
         return http.csrf(AbstractHttpConfigurer::disable)
-            .cors(AbstractHttpConfigurer::disable)
-            .httpBasic(AbstractHttpConfigurer::disable)
-            .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .exceptionHandling(configurer -> configurer.authenticationEntryPoint(
-                    (req, resp, authException) -> {
-                        resp.setStatus(HttpStatus.UNAUTHORIZED.value());
-                        resp.getWriter().write("Unauthorized.");
-                    })
-                    .accessDeniedHandler((req, resp, authException) -> {
-                        resp.setStatus(HttpStatus.FORBIDDEN.value());
-                        resp.getWriter().write("Unauthorized!!!");
-                    }))
-            .authorizeHttpRequests(configurer ->
-                    configurer.requestMatchers("/api/v1/auth/**").permitAll()
-                            .requestMatchers("/swagger-ui/**").permitAll()
-                            .requestMatchers("/v3/api-docs/**").permitAll()
-                            .anyRequest().authenticated())
-            .anonymous(AbstractHttpConfigurer::disable)
+                .cors(AbstractHttpConfigurer::disable)
+                .httpBasic(AbstractHttpConfigurer::disable)
+                .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .exceptionHandling(configurer -> configurer.authenticationEntryPoint(
+                                (req, resp, authException) -> {
+                                    resp.setStatus(HttpStatus.UNAUTHORIZED.value());
+                                    resp.getWriter().write("Unauthorized.");
+                                })
+                        .accessDeniedHandler((req, resp, authException) -> {
+                            resp.setStatus(HttpStatus.FORBIDDEN.value());
+                            resp.getWriter().write("Unauthorized!!!");
+                        }))
+                .authorizeHttpRequests(configurer ->
+                        configurer.requestMatchers("/api/v1/auth/**").permitAll()
+                                .requestMatchers("/swagger-ui/**").permitAll()
+                                .requestMatchers("/v3/api-docs/**").permitAll()
+                                .anyRequest().authenticated())
+                .anonymous(AbstractHttpConfigurer::disable)
                 .addFilterBefore(new JwtTokenFilter(jwtTokenProvider),
                         UsernamePasswordAuthenticationFilter.class).build();
     }
@@ -82,10 +80,10 @@ public class ApplicationConfig {
                 .components(
                         new Components()
                                 .addSecuritySchemes("bearerAuth",
-                                new SecurityScheme()
-                                        .type(SecurityScheme.Type.HTTP)
-                                        .scheme("bearer")
-                                        .bearerFormat("JWT")))
+                                        new SecurityScheme()
+                                                .type(SecurityScheme.Type.HTTP)
+                                                .scheme("bearer")
+                                                .bearerFormat("JWT")))
                 .info(new Info()
                         .title("Task list API")
                         .description("Task list API"));

@@ -6,7 +6,9 @@ import com.example.tasklist.web.dto.validation.OnUpdate;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.validator.constraints.Length;
 
@@ -22,23 +24,23 @@ public class UserDto {
     Long id;
 
     @Schema(description = "User name", example = "Jon Doe")
-    @NotNull(message = "Name Can't be NULL",  groups = { OnCreate.class, OnUpdate.class } )
-    @Length(max = 255, message = "Name Can't be more than 255 character",  groups = { OnCreate.class, OnUpdate.class })
+    @NotNull(message = "Name Can't be NULL", groups = {OnCreate.class, OnUpdate.class})
+    @Length(max = 255, message = "Name Can't be more than 255 character", groups = {OnCreate.class, OnUpdate.class})
     String name;
 
     @Schema(description = "User email", example = "mpetr4ova@gmail.com")
-    @NotNull(message = "Name Can't be NULL",  groups = { OnCreate.class, OnUpdate.class } )
-    @Length(max = 255, message = "Name Can't be more than 255 character",  groups = { OnCreate.class, OnUpdate.class })
+    @NotNull(message = "Name Can't be NULL", groups = {OnCreate.class, OnUpdate.class})
+    @Length(max = 255, message = "Name Can't be more than 255 character", groups = {OnCreate.class, OnUpdate.class})
     String username;
 
     @Schema(description = "User crypted password", example = "12345")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @NotNull(message = "Password Can't be NULL",  groups = { OnCreate.class, OnUpdate.class } )
+    @NotNull(message = "Password Can't be NULL", groups = {OnCreate.class, OnUpdate.class})
     String password;
 
     @Schema(description = "User password confirmation", example = "12345")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @NotNull(message = "Password Configuration Can't be NULL",  groups = { OnCreate.class} )
+    @NotNull(message = "Password Configuration Can't be NULL", groups = {OnCreate.class})
     String passwordConfirmation;
 
 }

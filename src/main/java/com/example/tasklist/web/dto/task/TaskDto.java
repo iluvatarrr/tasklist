@@ -7,7 +7,9 @@ import com.example.tasklist.web.dto.validation.OnUpdate;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotNull;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -23,11 +25,11 @@ public class TaskDto {
     @NotNull(message = "Id Can't be NULL", groups = OnUpdate.class)
     Long id;
 
-    @NotNull(message = "Title Can't be NULL",  groups = { OnCreate.class, OnUpdate.class } )
-    @Length(max = 255, message = "Title Can't be more than 255 character",  groups = { OnCreate.class, OnUpdate.class })
+    @NotNull(message = "Title Can't be NULL", groups = {OnCreate.class, OnUpdate.class})
+    @Length(max = 255, message = "Title Can't be more than 255 character", groups = {OnCreate.class, OnUpdate.class})
     String title;
 
-    @Length(max = 255, message = "Description Can't be more than 255 character",  groups = { OnCreate.class, OnUpdate.class })
+    @Length(max = 255, message = "Description Can't be more than 255 character", groups = {OnCreate.class, OnUpdate.class})
     String description;
 
     Status status;

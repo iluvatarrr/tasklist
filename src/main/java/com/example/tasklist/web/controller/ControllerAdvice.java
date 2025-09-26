@@ -41,7 +41,7 @@ public class ControllerAdvice {
         return new ExceptionBody(e.getMessage());
     }
 
-    @ExceptionHandler({AccessDeniedException.class, org.springframework.security.access.AccessDeniedException.class })
+    @ExceptionHandler({AccessDeniedException.class, org.springframework.security.access.AccessDeniedException.class})
     @ResponseStatus(HttpStatus.FORBIDDEN)
     public ExceptionBody handleAccessDenied() {
         return new ExceptionBody("Access denied");
@@ -62,7 +62,7 @@ public class ControllerAdvice {
         ExceptionBody exceptionBody = new ExceptionBody("Validation failed");
         exceptionBody.setErrors(e.getConstraintViolations().stream()
                 .collect(Collectors.toMap(violation -> violation.getPropertyPath().toString(), violation -> violation.getMessage()
-                        )));
+                )));
         return exceptionBody;
     }
 
