@@ -58,16 +58,16 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     @Transactional
-    @Cacheable(value = "TaskService::getById", key = "#task.id")
+    @CachePut(value = "TaskService::getById", key = "#result.id")
     public Task create(Task task, Long userId) {
         User user = userService.getById(userId);
         task.setStatus(Status.TODO);
+        taskRepository.save(task);
         user.getTasks().add(task);
-//        taskRepository.save(task);
-//        taskRepository.assignTask(userId, task.getId());
         userService.update(user);
         return task;
     }
+
 
     @Override
     @Transactional

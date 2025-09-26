@@ -28,7 +28,6 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    @Transactional(readOnly = true)
     @Cacheable(value = "UserService::getById", key = "#id")
     public User getById(Long id) {
         return userRepository.findById(id)
