@@ -52,8 +52,7 @@ public class UserController {
     @PreAuthorize("@customSecurityExpression.canAccessUser(#id)")
     public UserDto getById(@PathVariable @Argument Long id) {
         var user = userService.getById(id);
-        var um = userMapper.toDto(user);
-        return um;
+        return userMapper.toDto(user);
     }
 
     @DeleteMapping("/{id}")

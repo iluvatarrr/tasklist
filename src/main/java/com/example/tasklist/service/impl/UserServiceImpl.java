@@ -1,5 +1,6 @@
 package com.example.tasklist.service.impl;
 
+import com.example.tasklist.domain.MailType;
 import com.example.tasklist.domain.exception.ResourceNotFoundException;
 import com.example.tasklist.domain.user.Role;
 import com.example.tasklist.domain.user.User;
@@ -19,6 +20,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Properties;
 import java.util.Set;
 import java.util.UUID;
 
@@ -77,13 +79,16 @@ public class UserServiceImpl implements UserService {
         var confirmationToken = UUID.randomUUID().toString();
         user.setConfirmationToken(confirmationToken);
         userRepository.save(user);
-        SimpleMailMessage mailMessage = new SimpleMailMessage();
-        mailMessage.setTo(user.getUsername());
-        mailMessage.setSubject("Complete Registration!");
-        mailMessage.setText("To confirm your account, please click here : "
-                +"http://localhost:8081/api/v1/auth/confirm-account?token="+confirmationToken);
-        mailService.sendToEmail(mailMessage);
+        mailService.sendToEmail(user, MailType.REGISTRATION, new Properties());
         return user;
+    }
+
+    @Override
+    @Cacheable(value = "UserService::getTaskAuthor", key = "#taskId")
+    public User getTaskAuthor(Long taskId) {
+        return userRepository.findTaskAuthor(taskId)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("User not found."));
     }
 
     @Override

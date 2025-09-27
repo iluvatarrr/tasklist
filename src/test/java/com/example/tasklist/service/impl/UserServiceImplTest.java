@@ -1,9 +1,11 @@
 package com.example.tasklist.service.impl;
 
+import com.example.tasklist.domain.MailType;
 import com.example.tasklist.domain.exception.ResourceNotFoundException;
 import com.example.tasklist.domain.user.Role;
 import com.example.tasklist.domain.user.User;
 import com.example.tasklist.repository.UserRepository;
+import com.example.tasklist.service.MailService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,6 +16,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.Optional;
+import java.util.Properties;
 import java.util.Set;
 
 @ExtendWith(MockitoExtension.class)
@@ -24,6 +27,9 @@ public class UserServiceImplTest {
 
     @Mock
     private BCryptPasswordEncoder passwordEncoder;
+
+    @Mock
+    private MailService mailService;
 
     @InjectMocks
     private UserServiceImpl userService;
@@ -121,6 +127,12 @@ public class UserServiceImplTest {
         User testUser = userService.create(user);
         Mockito.verify(userRepository).save(user);
         Assertions.assertEquals(Set.of(Role.ROLE_USER), testUser.getRoles());
+        Mockito.verify(mailService).sendToEmail(
+                Mockito.eq(user),
+                Mockito.eq(MailType.REGISTRATION),
+                Mockito.any(Properties.class)
+        );
+
         Assertions.assertEquals("encodedPassword",
                 testUser.getPassword());
     }
