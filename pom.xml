@@ -45,6 +45,8 @@
         <minio.version>8.5.14</minio.version>
         <graphql-java-kickstart.version>15.2.0</graphql-java-kickstart.version>
         <graphql-java-extended-scalars.version>22.0</graphql-java-extended-scalars.version>
+        <mokito.version>5.20.0</mokito.version>
+        <junit.version>5.13.4</junit.version>
     </properties>
 
     <build>
@@ -194,7 +196,19 @@
             <artifactId>graphql-java-kickstart</artifactId>
             <version>${graphql-java-kickstart.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>${junit-jupiter.version}</version>
+            <scope>test</scope>
+        </dependency>
 
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>${mockito.version}</version>
+            <scope>test</scope>
+        </dependency>
         <dependency>
             <groupId>com.graphql-java</groupId>
             <artifactId>graphql-java-extended-scalars</artifactId>
