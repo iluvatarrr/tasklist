@@ -15,4 +15,6 @@ public interface UserService {
     void delete(Long id);
 
     boolean isTaskOwner(Long userId, Long taskId);
+
+    void confirmEmail(String confirmationToken);
 }

@@ -12,11 +12,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/auth")
@@ -28,7 +26,6 @@ public class AuthController {
 
     AuthService authService;
     UserService userService;
-
     UserMapper userMapper;
 
     @PostMapping("/login")
@@ -41,6 +38,11 @@ public class AuthController {
         User user = userMapper.toEntity(userDto);
         User createdUser = userService.create(user);
         return userMapper.toDto(createdUser);
+    }
+
+    @GetMapping("/confirm-account")
+    public void confirmUserAccount(@RequestParam("token") String confirmationToken) {
+        userService.confirmEmail(confirmationToken);
     }
 
     @PostMapping("/refresh")

@@ -22,7 +22,7 @@ public class CustomSecurityExpression {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         JwtEntity user = (JwtEntity) authentication.getPrincipal();
         Long userId = user.getId();
-        return userId.equals(id) || hasAnyRole(authentication, Role.ROLE_ADMIN);
+        return (userId.equals(id) || hasAnyRole(authentication, Role.ROLE_ADMIN));
     }
 
     private boolean hasAnyRole(Authentication authentication, Role... roles) {
@@ -33,13 +33,5 @@ public class CustomSecurityExpression {
             }
         }
         return false;
-    }
-
-    public boolean canAccessTask(Long taskId) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        JwtEntity user = (JwtEntity) authentication.getPrincipal();
-        Long userId = user.getId();
-        return userService.isTaskOwner(userId, taskId);
-
     }
 }

@@ -10,6 +10,16 @@ spring:
   graphql:
     graphiql:
       enabled: true
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${SMTP_USERNAME}
+    password: ${SMTP_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+        smtp.starttls.enable: true
 security:
   jwt:
     secret: ${JWT_SECRET}
@@ -24,3 +34,4 @@ minio:
   minioUrl: ${MINIO_URL}
   accessKey: ${MINIO_ACCESS_KEY}
   secretKey: ${MINIO_SECRET_KEY}
+

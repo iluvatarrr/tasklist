@@ -10,7 +10,7 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<User, Long> {
 
     Optional<User> findByUsername(String username);
-
+    Optional<User> findByConfirmationToken(String token);
     @Query(value = """
             SELECT exists
                 (SELECT 1 FROM users_tasks WHERE user_id = :user_id AND task_id = :task_id)

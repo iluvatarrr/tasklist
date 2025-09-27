@@ -17,12 +17,15 @@ import java.util.Set;
 @Setter
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class User implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
     String name;
     String username;
     String password;
+    String confirmationToken;
+    boolean isEnabled;
 
     @Transient
     String passwordConfirmation;
@@ -36,4 +39,5 @@ public class User implements Serializable {
     @OneToMany(fetch = FetchType.EAGER)
     @JoinTable(inverseJoinColumns = @JoinColumn(name = "task_id"))
     List<Task> tasks;
+
 }

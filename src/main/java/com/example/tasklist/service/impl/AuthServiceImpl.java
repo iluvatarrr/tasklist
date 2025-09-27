@@ -1,5 +1,6 @@
 package com.example.tasklist.service.impl;
 
+import com.example.tasklist.domain.exception.ResourceNotFoundException;
 import com.example.tasklist.domain.user.User;
 import com.example.tasklist.service.AuthService;
 import com.example.tasklist.service.UserService;
@@ -24,9 +25,13 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public JwtResponse login(JwtRequest loginRequest) {
+
         var jwtResponse = new JwtResponse();
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
         User user = userService.getByUsername(loginRequest.getUsername());
+        if (!user.isEnabled()) {
+            throw new ResourceNotFoundException("User not click on email link for end register");
+        }
         jwtResponse.setUsername(user.getUsername());
         jwtResponse.setId(user.getId());
         jwtResponse.setAccessToken(jwtTokenProvider.createAccessToken(user.getId(), user.getUsername(), user.getRoles()));

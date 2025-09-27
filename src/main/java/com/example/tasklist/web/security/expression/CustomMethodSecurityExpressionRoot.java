@@ -53,7 +53,6 @@ public class CustomMethodSecurityExpressionRoot extends SecurityExpressionRoot i
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         JwtEntity user = (JwtEntity) authentication.getPrincipal();
         Long userId = user.getId();
-        return userService.isTaskOwner(userId, taskId);
-
+        return userService.isTaskOwner(userId, taskId) && user.isEnabled();
     }
 }

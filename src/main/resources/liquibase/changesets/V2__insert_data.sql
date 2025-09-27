@@ -1,6 +1,6 @@
-INSERT INTO users (name, username, password)
-VALUES ('Александр Иванов', 'aivano4v@gmail.com', '$2a$12$aI8fLQlw6pUSOhYpylGVdOm6NL6eUGlugvr3hZqmpFiqvoq/k4u2K'),
-       ('Мария Петрова', 'mpetr4ova@gmail.com', '$2a$12$aI8fLQlw6pUSOhYpylGVdOm6NL6eUGlugvr3hZqmpFiqvoq/k4u2K');
+INSERT INTO users (name, username, password, confirmation_token, is_enabled)
+VALUES ('Александр Иванов', 'aivano4v@gmail.com', '$2a$12$aI8fLQlw6pUSOhYpylGVdOm6NL6eUGlugvr3hZqmpFiqvoq/k4u2K', '7ef88f8a-962b-4557-a686-4ddab27001e3', true),
+       ('Мария Петрова', 'mpetr4ova@gmail.com', '$2a$12$aI8fLQlw6pUSOhYpylGVdOm6NL6eUGlugvr3hZqmpFiqvoq/k4u2K', '7ef88f8a-962b-4557-a686-4ddab27001e3', true);
 
 INSERT INTO users_roles (user_id, role)
 VALUES (1, 'ROLE_ADMIN'),
